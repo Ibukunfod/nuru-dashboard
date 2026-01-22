@@ -60,7 +60,7 @@ export function RevenueExpensesChart() {
               tickFormatter={(value) => `${value / 1000}K`}
             />
             <Tooltip 
-              formatter={(value: number) => `₦${value.toLocaleString()}`}
+              formatter={(value) => value !== undefined ? `₦${(value as number).toLocaleString()}` : ''}
               contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb' }}
             />
             <Legend />
