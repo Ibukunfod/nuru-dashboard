@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { toast } from "sonner";
+import { useEffect } from "react";
 import {
   Search,
   House,
@@ -30,6 +32,21 @@ const NAV_ITEMS: NavItemConfig[] = [
 
 export function Sidebar() {
   const [selectedItem, setSelectedItem] = useState<NavItem>("dashboard");
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Check for Cmd+N (Mac) or Alt+N (Windows/Linux)
+      if ((e.metaKey || e.altKey) && e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        toast.info("Quick actions is still in development", {
+          description: "This feature will be available soon.",
+        });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <aside
@@ -88,8 +105,15 @@ export function Sidebar() {
 }
 
 function QuickActionsButton() {
+  const handleClick = () => {
+    toast.info("Quick actions is still in development", {
+      description: "This feature will be available soon.",
+    });
+  };
+
   return (
     <button
+      onClick={handleClick}
       className="flex items-center relative"
       style={{
         width: "194px",
