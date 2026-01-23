@@ -29,7 +29,7 @@ export function PageHeader() {
             lineHeight: "1",
           }}
         >
-          Business Overview
+          Darasimi & Damilola are lazy girls
         </h1>
         <p
           style={{
@@ -61,7 +61,7 @@ export function PageHeader() {
           border: "0.6px solid #E5E7EB",
           backgroundColor: "#FFFFFF",
           fontSize: "14px",
-          fontWeight: 600,
+          fontWeight: 500,
           color: "#111827",
           cursor: "pointer",
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
