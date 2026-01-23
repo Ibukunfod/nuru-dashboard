@@ -10,8 +10,8 @@ export default function DashboardPage() {
     <div style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <DashboardHeader />
       <div className="overflow-y-auto" style={{ height: "calc(100% - 52px)" }}>
+        <PageHeader />
         <div className="p-8 space-y-6">
-          <PageHeader />
           <MetricsGrid />
           
           <div className="grid grid-cols-3 gap-6">
