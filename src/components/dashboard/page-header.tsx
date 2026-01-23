@@ -45,26 +45,57 @@ export function PageHeader() {
       </div>
 
       <div style={{ display: "flex", gap: "8px" }}>
-        {/* Filter Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">
-              This Year
-              <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>This Year</DropdownMenuItem>
-            <DropdownMenuItem>This Quarter</DropdownMenuItem>
-            <DropdownMenuItem>This Month</DropdownMenuItem>
-            <DropdownMenuItem>Last 30 Days</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+  {/* Filter Dropdown */}
+  <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <button
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          paddingLeft: "12px",
+          paddingRight: "12px",
+          paddingTop: "6px",
+          paddingBottom: "6px",
+          borderRadius: "10px",
+          border: "0.6px solid #E5E7EB",
+          backgroundColor: "#FFFFFF",
+          fontSize: "14px",
+          fontWeight: 600,
+          color: "#111827",
+          cursor: "pointer",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        This Year
+        <ChevronDown size={16} strokeWidth={2} />
+      </button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent align="end">
+      <DropdownMenuItem>This Year</DropdownMenuItem>
+      <DropdownMenuItem>This Quarter</DropdownMenuItem>
+      <DropdownMenuItem>This Month</DropdownMenuItem>
+      <DropdownMenuItem>Last 30 Days</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 
-        {/* Refresh Button */}
-        <Button variant="outline" size="sm">
-          <RotateCw className="h-4 w-4" />
-        </Button>
+{/* Refresh Button */}
+<button
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "35px",
+    height: "35px",
+    borderRadius: "10px",
+    border: "0.6px solid #E5E7EB",
+    backgroundColor: "#FFFFFF",
+    cursor: "pointer",
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+  }}
+>
+  <RotateCw size={16} strokeWidth={2} style={{ color: "#111827" }} />
+</button>
       </div>
     </div>
   );
