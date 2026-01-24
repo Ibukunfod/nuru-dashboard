@@ -19,18 +19,26 @@ export default function DashboardPage() {
             paddingLeft: "16px",
             paddingRight: "16px",
             display: "grid",
-            gridTemplateColumns: "2fr 1fr",
+            gridTemplateColumns: "700px 1fr",
             gap: "10px",
           }}
         >
           <RevenueExpensesChart />
           <TopCustomers />
+        </div>
 
-
+        <div
+          style={{
+            marginTop: "10px",
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            marginBottom: "10px",
+          }}
+        >
           <RecentTransactions />
         </div>
+
       </div>
     </div>
-
   );
 }
