@@ -97,7 +97,7 @@ export function MetricsGrid() {
 
           <div
             style={{
-              fontSize: "42px",
+              fontSize: "38px",
               fontWeight: 500,
               letterSpacing: "-0.02em",
               color: "#111827",
