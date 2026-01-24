@@ -1,5 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,34 +35,90 @@ const metrics = [
 
 export function MetricsGrid() {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div
+      style={{
+        marginTop: "14px",
+        paddingLeft: "20px",
+        paddingRight: "20px",
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "10px",
+      }}
+    >
       {metrics.map((metric) => (
-        <Card key={metric.title}>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+        <div
+          key={metric.title}
+          style={{
+            backgroundColor: "#FFFFFF",
+            border: "0.6px solid #E5E7EB",
+            borderRadius: "8px",
+            padding: "10px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "1px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "14px",
+                fontWeight: 500,
+                letterSpacing: "-0.02em",
+                color: "#374151",
+              }}
+            >
               {metric.title}
-            </CardTitle>
+            </span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
+                <button
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "0",
+                  }}
+                >
+                  <MoreVertical
+                    style={{ width: "16px", height: "16px", color: "#6B7280" }}
+                  />
+                </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>View details</DropdownMenuItem>
                 <DropdownMenuItem>Export data</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{metric.value}</div>
-            <p className={`text-sm mt-1 ${
-              metric.changeType === "positive" ? "text-green-600" : "text-red-600"
-            }`}>
-              {metric.change} vs prior period
-            </p>
-          </CardContent>
-        </Card>
+          </div>
+
+          <div
+            style={{
+              fontSize: "42px",
+              fontWeight: 500,
+              letterSpacing: "-0.02em",
+              color: "#111827",
+              marginTop: "0",
+            }}
+          >
+            {metric.value}
+          </div>
+
+          <p
+            style={{
+              fontSize: "14px",
+              fontWeight: 400,
+              letterSpacing: "-0.02em",
+              color: "#6B7280",
+              marginTop: "0",
+            }}
+          >
+            {metric.change} vs prior period
+          </p>
+        </div>
       ))}
     </div>
   );

@@ -11,9 +11,9 @@ export default function DashboardPage() {
       <DashboardHeader />
       <div className="overflow-y-auto" style={{ height: "calc(100% - 52px)" }}>
         <PageHeader />
+        <MetricsGrid />
+        
         <div className="p-8 space-y-6">
-          <MetricsGrid />
-          
           <div className="grid grid-cols-3 gap-6">
             <div className="col-span-2">
               <RevenueExpensesChart />
