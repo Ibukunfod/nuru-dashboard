@@ -38,8 +38,8 @@ export function MetricsGrid() {
     <div
       style={{
         marginTop: "14px",
-        paddingLeft: "20px",
-        paddingRight: "20px",
+        paddingLeft: "16px",
+        paddingRight: "16px",
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
         gap: "10px",

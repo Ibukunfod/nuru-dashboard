@@ -11,12 +11,12 @@ export function PageHeader() {
   return (
     <div
       style={{
-        marginLeft: "20px",
+        marginLeft: "16px",
         marginTop: "18px",
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "space-between",
-        marginRight: "20px",
+        marginRight: "16px",
       }}
     >
       <div>

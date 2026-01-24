@@ -6,7 +6,7 @@ export function DashboardHeader() {
       style={{
         backgroundColor: "#FFFFFF",
         borderBottom: "0.6px solid #E5E7EB",
-        paddingLeft: "17px",
+        paddingLeft: "16px",
         display: "flex",
         alignItems: "center",
         height: "52px", // Fixed height instead of padding
