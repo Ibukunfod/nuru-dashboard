@@ -12,20 +12,25 @@ export default function DashboardPage() {
       <div className="overflow-y-auto" style={{ height: "calc(100% - 52px)" }}>
         <PageHeader />
         <MetricsGrid />
-        
-        <div className="p-8 space-y-6">
-          <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2">
-              <RevenueExpensesChart />
-            </div>
-            <div>
-              <TopCustomers />
-            </div>
-          </div>
+
+        <div
+          style={{
+            marginTop: "10px",
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr",
+            gap: "10px",
+          }}
+        >
+          <RevenueExpensesChart />
+          <TopCustomers />
+
 
           <RecentTransactions />
         </div>
       </div>
     </div>
+
   );
 }

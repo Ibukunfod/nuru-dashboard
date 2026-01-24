@@ -52,7 +52,7 @@ export function MetricsGrid() {
             backgroundColor: "#FFFFFF",
             border: "0.6px solid #E5E7EB",
             borderRadius: "8px",
-            padding: "10px",
+            padding: "8px",
           }}
         >
           <div

@@ -1,13 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { TrendingUp } from "lucide-react";
 
@@ -28,61 +27,94 @@ const data = [
 
 export function RevenueExpensesChart() {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div className="flex items-center gap-2">
-          <TrendingUp className="h-4 w-4" />
-          <CardTitle>Revenue vs Expenses</CardTitle>
-        </div>
-        <Select defaultValue="monthly">
-          <SelectTrigger className="w-32">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="monthly">Monthly</SelectItem>
-            <SelectItem value="quarterly">Quarterly</SelectItem>
-            <SelectItem value="yearly">Yearly</SelectItem>
-          </SelectContent>
-        </Select>
-      </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis 
-              dataKey="month" 
-              tick={{ fontSize: 12 }}
-              stroke="#888"
-            />
-            <YAxis 
-              tick={{ fontSize: 12 }}
-              stroke="#888"
-              tickFormatter={(value) => `${value / 1000}K`}
-            />
-            <Tooltip 
-              formatter={(value) => value !== undefined ? `₦${(value as number).toLocaleString()}` : ''}
-              contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb' }}
-            />
-            <Legend />
-            <Line 
-              type="monotone" 
-              dataKey="revenue" 
-              stroke="#10b981" 
-              strokeWidth={2}
-              name="Revenue"
-              dot={false}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="expenses" 
-              stroke="#ef4444" 
-              strokeWidth={2}
-              name="Expenses"
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+    <div
+      style={{
+        backgroundColor: "#FFFFFF",
+        border: "0.6px solid #E5E7EB",
+        borderRadius: "8px",
+        padding: "16px",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+        <h3
+          style={{
+            fontSize: "14px",
+            fontWeight: 500,
+            letterSpacing: "-0.02em",
+            color: "#374151",
+          }}
+        >
+          Revenue vs Expenses
+        </h3>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                paddingLeft: "12px",
+                paddingRight: "12px",
+                paddingTop: "6px",
+                paddingBottom: "6px",
+                borderRadius: "10px",
+                border: "0.6px solid #E5E7EB",
+                backgroundColor: "#FFFFFF",
+                fontSize: "14px",
+                fontWeight: 500,
+                color: "#111827",
+                cursor: "pointer",
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+              }}
+            >
+              Monthly
+              <ChevronDown size={14} strokeWidth={2} />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>Monthly</DropdownMenuItem>
+            <DropdownMenuItem>Quarterly</DropdownMenuItem>
+            <DropdownMenuItem>Yearly</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis
+            dataKey="month"
+            tick={{ fontSize: 12 }}
+            stroke="#888"
+          />
+          <YAxis
+            tick={{ fontSize: 12 }}
+            stroke="#888"
+            tickFormatter={(value) => `${value / 1000}K`}
+          />
+          <Tooltip
+            formatter={(value) => value !== undefined ? `₦${(value as number).toLocaleString()}` : ''}
+            contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb' }}
+          />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="revenue"
+            stroke="#10b981"
+            strokeWidth={2}
+            name="Revenue"
+            dot={false}
+          />
+          <Line
+            type="monotone"
+            dataKey="expenses"
+            stroke="#ef4444"
+            strokeWidth={2}
+            name="Expenses"
+            dot={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
