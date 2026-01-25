@@ -50,7 +50,7 @@ export function Sidebar() {
 
   return (
     <aside
-      className="w-[272px] flex flex-col"
+      className="w-[240px] flex flex-col"
       style={{
         backgroundColor: "#FBFBFB",
         borderRight: "0.6px solid #E5E7EB",
@@ -116,7 +116,7 @@ function QuickActionsButton() {
       onClick={handleClick}
       className="flex items-center relative"
       style={{
-        width: "194px",
+        width: "162px",
         height: "27px",
         backgroundColor: "#FFFFFF",
         border: "none",
@@ -228,7 +228,7 @@ function NavButton({ item, isSelected, isFirst, onClick }: NavButtonProps) {
       onClick={onClick}
       className="flex items-center font-medium"
       style={{
-        width: "254px",
+        width: "222px",
         height: "29px",
         backgroundColor: isSelected ? "#EDEEF1" : "transparent",
         border: "none",

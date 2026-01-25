@@ -19,7 +19,7 @@ export default function DashboardPage() {
             paddingLeft: "16px",
             paddingRight: "16px",
             display: "grid",
-            gridTemplateColumns: "700px 1fr",
+            gridTemplateColumns: "65% 35%",
             gap: "10px",
           }}
         >
