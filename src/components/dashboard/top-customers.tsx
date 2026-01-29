@@ -153,7 +153,7 @@ export function TopCustomers() {
         style={{ 
           flex: 1, 
           overflowY: "auto", 
-          padding: "0 18px", // Increased horizontal padding for the "inset" vibe
+          padding: "0 10px", // Increased horizontal padding for the "inset" vibe
           WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
           maskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
         }}
