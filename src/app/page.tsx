@@ -9,7 +9,14 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <DashboardHeader />
-      <div className="overflow-y-auto" style={{ height: "calc(100% - 52px)" }}>
+      {/* Changes made here:
+        1. Added "custom-scrollbar" to the className.
+        This ensures the styling applies to this specific scrollable area.
+      */}
+      <div 
+        className="overflow-y-auto custom-scrollbar" 
+        style={{ height: "calc(100% - 52px)" }}
+      >
         <PageHeader />
         <MetricsGrid />
 
