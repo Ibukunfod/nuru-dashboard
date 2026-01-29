@@ -1,4 +1,4 @@
-import { House, RefreshCw } from "lucide-react";
+import { House, RotateCcw } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,7 +45,7 @@ export function DashboardHeader() {
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
         {/* Last Refresh */}
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <RefreshCw size={13} strokeWidth={2} style={{ color: "#6B7280" }} />
+          <RotateCcw size={13} strokeWidth={2} style={{ color: "#6B7280" }} />
           <span style={{ fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
             Last refresh: <span style={{ fontWeight: 500 }}>TODAY 09:41 AM</span>
           </span>

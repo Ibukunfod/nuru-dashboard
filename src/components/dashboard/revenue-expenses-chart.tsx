@@ -6,35 +6,107 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Area,
-  AreaChart,
 } from "recharts";
 
 const data = [
-  { month: "Jan", revenue: 45000, expenses: 28000 },
-  { month: "Feb", revenue: 52000, expenses: 31000 },
-  { month: "Mar", revenue: 48000, expenses: 29000 },
-  { month: "Apr", revenue: 61000, expenses: 35000 },
-  { month: "May", revenue: 55000, expenses: 33000 },
-  { month: "Jun", revenue: 67000, expenses: 38000 },
-  { month: "Jul", revenue: 72000, expenses: 41000 },
-  { month: "Aug", revenue: 68000, expenses: 39000 },
-  { month: "Sep", revenue: 76000, expenses: 43000 },
-  { month: "Oct", revenue: 82000, expenses: 46000 },
-  { month: "Nov", revenue: 78000, expenses: 44000 },
-  { month: "Dec", revenue: 88000, expenses: 49000 },
+  { month: "Jan", revenue: 52000, expenses: 31000 },
+  { month: "Feb", revenue: 58000, expenses: 33000 },
+  { month: "Mar", revenue: 61000, expenses: 35000 },
+  { month: "Apr", revenue: 59000, expenses: 34000 },
+  { month: "May", revenue: 67000, expenses: 38000 },
+  { month: "Jun", revenue: 71000, expenses: 40000 },
+  { month: "Jul", revenue: 68000, expenses: 39000 },
+  { month: "Aug", revenue: 75000, expenses: 42000 },
+  { month: "Sep", revenue: 79000, expenses: 44000 },
+  { month: "Oct", revenue: 83000, expenses: 46000 },
+  { month: "Nov", revenue: 81000, expenses: 45000 },
+  { month: "Dec", revenue: 88000, expenses: 48000 },
 ];
 
 export function RevenueExpensesChart() {
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (!active || !payload || !payload.length) {
+      return null;
+    }
+
+    return (
+      <div
+        style={{
+          backgroundColor: "#18181B",
+          border: "0.5px solid #27272A",
+          borderRadius: "6px",
+          padding: "8px 10px",
+          boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.24)",
+          minWidth: "140px",
+        }}
+      >
+        <p
+          style={{
+            fontSize: "11px",
+            fontWeight: 600,
+            color: "#A1A1AA",
+            marginBottom: "6px",
+            textTransform: "uppercase",
+            letterSpacing: "0.5px",
+          }}
+        >
+          {label}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          {payload.map((entry: any, index: number) => (
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "#E4E4E7",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <span
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "2px",
+                    backgroundColor: entry.color,
+                  }}
+                />
+                {entry.dataKey === "revenue" ? "Revenue" : "Expenses"}
+              </span>
+              <span
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "#FAFAFA",
+                  marginLeft: "12px",
+                }}
+              >
+                ₦{(entry.value / 1000).toFixed(0)}K
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       style={{
@@ -47,9 +119,10 @@ export function RevenueExpensesChart() {
       <div
         style={{
           display: "flex",
-          alignItems: "flex-start",
+          alignItems: "center",
           justifyContent: "space-between",
           marginTop: "1px",
+          position: "relative",
         }}
       >
         <h3
@@ -69,7 +142,9 @@ export function RevenueExpensesChart() {
             display: "flex",
             gap: "24px",
             alignItems: "center",
-            paddingTop: "4px",
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -96,35 +171,23 @@ export function RevenueExpensesChart() {
           </div>
         </div>
 
+        {/* More Options Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                paddingLeft: "12px",
-                paddingRight: "12px",
-                paddingTop: "6px",
-                paddingBottom: "6px",
-                borderRadius: "10px",
-                border: "0.6px solid #E5E7EB",
-                backgroundColor: "#FFFFFF",
-                fontSize: "14px",
-                fontWeight: 500,
-                color: "#111827",
+                background: "transparent",
+                border: "none",
                 cursor: "pointer",
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+                padding: "0",
               }}
             >
-              Monthly
-              <ChevronDown size={14} strokeWidth={2} />
+              <MoreVertical style={{ width: "16px", height: "16px", color: "#6B7280" }} />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Monthly</DropdownMenuItem>
-            <DropdownMenuItem>Quarterly</DropdownMenuItem>
-            <DropdownMenuItem>Yearly</DropdownMenuItem>
+            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <DropdownMenuItem>Export data</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -148,10 +211,10 @@ export function RevenueExpensesChart() {
             </defs>
 
             <CartesianGrid
-              strokeDasharray="0"
               stroke="#E5E7EB"
               strokeWidth={0.6}
               vertical={false}
+              strokeDasharray="3 3"
             />
 
             <XAxis
@@ -171,23 +234,23 @@ export function RevenueExpensesChart() {
             />
 
             <Tooltip
-              contentStyle={{
-                backgroundColor: "#FFFFFF",
-                border: "0.6px solid #E5E7EB",
-                borderRadius: "8px",
-                padding: "8px 12px",
-                fontSize: "12px",
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+              content={<CustomTooltip />}
+              cursor={{
+                stroke: "#D1D5DB",
+                strokeWidth: 1,
+                strokeDasharray: "4 4",
               }}
-              formatter={(value: number | undefined) => [`₦${(value ?? 0).toLocaleString()}`, ""]}
-              labelStyle={{ fontWeight: 500, marginBottom: "4px", color: "#111827" }}
+              isAnimationActive={false}
+              position={{ y: 0 }}
             />
 
             <Area
-              type="natural"
+              type="monotone"
               dataKey="revenue"
               stroke="#10B981"
               strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
               fill="url(#revenueGradient)"
               dot={false}
               activeDot={{
@@ -199,10 +262,12 @@ export function RevenueExpensesChart() {
             />
 
             <Area
-              type="natural"
+              type="monotone"
               dataKey="expenses"
               stroke="#EF4444"
               strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
               fill="url(#expensesGradient)"
               dot={false}
               activeDot={{
