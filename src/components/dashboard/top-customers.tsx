@@ -75,7 +75,7 @@ function BreakdownSection({
         style={{
           display: "flex",
           width: "100%",
-          height: "12px",
+          height: "10px",
           borderRadius: "9999px",
           overflow: "hidden",
           marginBottom: "16px",
