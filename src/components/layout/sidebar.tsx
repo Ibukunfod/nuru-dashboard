@@ -100,7 +100,34 @@ export function Sidebar() {
           />
         ))}
       </nav>
+      {/* User Button at Bottom */}
+      <div style={{ marginTop: "auto", padding: "12px" }}>
+        <button
+          className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          style={{
+            border: "none",
+            backgroundColor: "transparent",
+            cursor: "pointer",
+          }}
+        >
+          <div
+            className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden"
+            style={{ flexShrink: 0 }}
+          >
+            <span className="text-sm font-medium text-gray-700">DP</span>
+          </div>
+          <div className="flex-1 text-left overflow-hidden">
+            <div className="text-sm font-medium text-gray-900 truncate">
+              Daniel Parker
+            </div>
+            <div className="text-xs text-gray-500 truncate">
+              daniel.parker@gmail.com
+            </div>
+          </div>
+        </button>
+      </div>
     </aside>
+    
   );
 }
 

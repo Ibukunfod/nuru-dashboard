@@ -1,12 +1,22 @@
 "use client";
 
-import { MoreVertical, ArrowUpDown } from "lucide-react";
+import * as React from "react";
+import { MoreVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface Transaction {
   id: string;
@@ -26,7 +36,7 @@ function formatAmount(amount: number): string {
 const transactions: Transaction[] = [
   {
     id: "1",
-    date: "Jan 27, 2026",
+    date: "27 Jan 2026",
     type: "sale",
     party: "O. Damilola",
     amount: 45000,
@@ -35,7 +45,7 @@ const transactions: Transaction[] = [
   },
   {
     id: "2",
-    date: "Jan 26, 2026",
+    date: "26 Jan 2026",
     type: "expense",
     party: "MTN Nigeria",
     amount: -15000,
@@ -44,7 +54,7 @@ const transactions: Transaction[] = [
   },
   {
     id: "3",
-    date: "Jan 25, 2026",
+    date: "25 Jan 2026",
     type: "sale",
     party: "J. Aliyu",
     amount: 32500,
@@ -53,7 +63,7 @@ const transactions: Transaction[] = [
   },
   {
     id: "4",
-    date: "Jan 24, 2026",
+    date: "24 Jan 2026",
     type: "expense",
     party: "GIG Logistics",
     amount: -8900,
@@ -62,7 +72,7 @@ const transactions: Transaction[] = [
   },
   {
     id: "5",
-    date: "Jan 23, 2026",
+    date: "23 Jan 2026",
     type: "sale",
     party: "O. Darasimi",
     amount: 28000,
@@ -72,6 +82,28 @@ const transactions: Transaction[] = [
 ];
 
 export function RecentTransactions() {
+  const [selectedRows, setSelectedRows] = React.useState<Set<string>>(new Set());
+
+  const selectAll = selectedRows.size === transactions.length;
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedRows(new Set(transactions.map((row) => row.id)));
+    } else {
+      setSelectedRows(new Set());
+    }
+  };
+
+  const handleSelectRow = (id: string, checked: boolean) => {
+    const newSelected = new Set(selectedRows);
+    if (checked) {
+      newSelected.add(id);
+    } else {
+      newSelected.delete(id);
+    }
+    setSelectedRows(newSelected);
+  };
+
   return (
     <div
       style={{
@@ -144,307 +176,92 @@ export function RecentTransactions() {
       </div>
 
       {/* Table */}
-      <div style={{ width: "100%" }}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "separate",
-            borderSpacing: 0,
-          }}
-        >
-          <thead>
-            <tr
-              style={{
-                borderBottom: "1px solid #D1D5DB",
-              }}
+      <Table>
+        <TableHeader>
+          <TableRow className="hover:bg-transparent">
+            <TableHead className="w-8 py-2">
+              <Checkbox
+                id="select-all-checkbox"
+                name="select-all-checkbox"
+                checked={selectAll}
+                onCheckedChange={handleSelectAll}
+              />
+            </TableHead>
+            <TableHead className="text-xs font-medium text-gray-500 py-2">
+              Date
+            </TableHead>
+            <TableHead className="text-xs font-medium text-gray-500 py-2">
+              Type
+            </TableHead>
+            <TableHead className="text-xs font-medium text-gray-500 py-2">
+              Party
+            </TableHead>
+            <TableHead className="text-xs font-medium text-gray-500 py-2 text-right">
+              Amount
+            </TableHead>
+            <TableHead className="text-xs font-medium text-gray-500 py-2">
+              Description
+            </TableHead>
+            <TableHead className="text-xs font-medium text-gray-500 py-2">
+              Status
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {transactions.map((transaction) => (
+            <TableRow
+              key={transaction.id}
+              data-state={selectedRows.has(transaction.id) ? "selected" : undefined}
             >
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px 10px 12px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#000000",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
+              <TableCell className="py-2.5">
+                <Checkbox
+                  id={`row-${transaction.id}-checkbox`}
+                  name={`row-${transaction.id}-checkbox`}
+                  checked={selectedRows.has(transaction.id)}
+                  onCheckedChange={(checked) =>
+                    handleSelectRow(transaction.id, checked === true)
+                  }
+                />
+              </TableCell>
+              <TableCell className="text-sm text-gray-500 py-2.5">
+                {transaction.date}
+              </TableCell>
+              <TableCell className="py-2.5">
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                    transaction.type === "sale"
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                      : "bg-rose-50 text-rose-700 border border-rose-200"
+                  }`}
                 >
-                  Date
-                  <ArrowUpDown
-                    style={{
-                      width: "10px",
-                      height: "10px",
-                      color: "#9CA3AF",
-                      strokeWidth: 2.5,
-                    }}
-                  />
-                </div>
-              </th>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px 10px 12px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#000000",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  Type
-                  <ArrowUpDown
-                    style={{
-                      width: "10px",
-                      height: "10px",
-                      color: "#9CA3AF",
-                      strokeWidth: 2.5,
-                    }}
-                  />
-                </div>
-              </th>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px 10px 12px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#000000",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  Party
-                  <ArrowUpDown
-                    style={{
-                      width: "10px",
-                      height: "10px",
-                      color: "#9CA3AF",
-                      strokeWidth: 2.5,
-                    }}
-                  />
-                </div>
-              </th>
-              <th
-                style={{
-                  textAlign: "right",
-                  padding: "8px 12px 10px 12px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#000000",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                    gap: "4px",
-                  }}
-                >
-                  Amount
-                  <ArrowUpDown
-                    style={{
-                      width: "10px",
-                      height: "10px",
-                      color: "#9CA3AF",
-                      strokeWidth: 2.5,
-                    }}
-                  />
-                </div>
-              </th>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px 10px 12px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#000000",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  Description
-                  <ArrowUpDown
-                    style={{
-                      width: "10px",
-                      height: "10px",
-                      color: "#9CA3AF",
-                      strokeWidth: 2.5,
-                    }}
-                  />
-                </div>
-              </th>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px 10px 12px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  color: "#000000",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  Status
-                  <ArrowUpDown
-                    style={{
-                      width: "10px",
-                      height: "10px",
-                      color: "#9CA3AF",
-                      strokeWidth: 2.5,
-                    }}
-                  />
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((transaction, index) => (
-              <tr
-                key={transaction.id}
-                style={{
-                  transition: "background-color 0.08s ease",
-                  cursor: "pointer",
-                  backgroundColor: index % 2 === 0 ? "#FFFFFF" : "#FAFBFC",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#E8F4FD";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    index % 2 === 0 ? "#FFFFFF" : "#FAFBFC";
-                }}
-              >
-                <td
-                  style={{
-                    padding: "10px 12px",
-                    fontSize: "13px",
-                    fontWeight: 400,
-                    color: "#1F2937",
-                  }}
-                >
-                  {transaction.date}
-                </td>
-                <td
-                  style={{
-                    padding: "10px 12px",
-                  }}
-                >
+                  {transaction.type === "sale" ? "Sale" : "Expense"}
+                </span>
+              </TableCell>
+              <TableCell className="font-medium py-2.5">
+                {transaction.party}
+              </TableCell>
+              <TableCell className="text-right font-medium tabular-nums py-2.5">
+                {formatAmount(transaction.amount)}
+              </TableCell>
+              <TableCell className="text-sm text-gray-500 py-2.5 truncate max-w-xs">
+                {transaction.description}
+              </TableCell>
+              <TableCell className="py-2.5">
+                <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
                   <span
-                    style={{
-                      display: "inline-block",
-                      fontSize: "13px",
-                      fontWeight: 500,
-                      padding: "2px 8px",
-                      borderRadius: "4px",
-                      backgroundColor:
-                        transaction.type === "sale" ? "#ECFDF5" : "#FEF2F2",
-                      color: transaction.type === "sale" ? "#059669" : "#DC2626",
-                      border: "0.5px solid",
-                      borderColor:
-                        transaction.type === "sale" ? "#A7F3D0" : "#FECACA",
-                    }}
-                  >
-                    {transaction.type === "sale" ? "Sale" : "Expense"}
-                  </span>
-                </td>
-                <td
-                  style={{
-                    padding: "10px 12px",
-                    fontSize: "13px",
-                    fontWeight: 400,
-                    color: "#1F2937",
-                  }}
-                >
-                  {transaction.party}
-                </td>
-                <td
-                  style={{
-                    padding: "10px 12px",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#1F2937",
-                    textAlign: "right",
-                    fontVariantNumeric: "tabular-nums",
-                  }}
-                >
-                  {formatAmount(transaction.amount)}
-                </td>
-                <td
-                  style={{
-                    padding: "10px 12px",
-                    fontSize: "13px",
-                    fontWeight: 400,
-                    color: "#6B7280",
-                  }}
-                >
-                  {transaction.description}
-                </td>
-                <td
-                  style={{
-                    padding: "10px 12px",
-                    fontSize: "13px",
-                    fontWeight: 400,
-                    color: "#1F2937",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        backgroundColor:
-                          transaction.status === "completed" ? "#10B981" : "#F59E0B",
-                      }}
-                    />
-                    <span style={{ textTransform: "capitalize" }}>
-                      {transaction.status}
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      transaction.status === "completed"
+                        ? "bg-green-500"
+                        : "bg-yellow-500"
+                    }`}
+                  />
+                  {transaction.status === "completed" ? "Completed" : "Pending"}
+                </span>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
