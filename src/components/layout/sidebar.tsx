@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import {
@@ -12,7 +14,22 @@ import {
   UsersRound,
   Package,
   Command,
+  Sparkles,
+  User,
+  CreditCard,
+  Bell,
+  LogOut,
+  ChevronsUpDown,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type NavItem = "dashboard" | "transactions" | "reports" | "customers" | "inventory";
 
@@ -20,23 +37,23 @@ interface NavItemConfig {
   id: NavItem;
   label: string;
   icon: typeof House;
+  href: string;
 }
 
 const NAV_ITEMS: NavItemConfig[] = [
-  { id: "dashboard", label: "Dashboard", icon: House },
-  { id: "transactions", label: "Transactions", icon: RefreshCcw },
-  { id: "reports", label: "Reports", icon: File },
-  { id: "customers", label: "Customers", icon: UsersRound },
-  { id: "inventory", label: "Inventory", icon: Package },
+  { id: "dashboard", label: "Dashboard", icon: House, href: "/" },
+  { id: "transactions", label: "Transactions", icon: RefreshCcw, href: "/transactions" },
+  { id: "reports", label: "Reports", icon: File, href: "/reports" },
+  { id: "customers", label: "Customers", icon: UsersRound, href: "/customers" },
+  { id: "inventory", label: "Inventory", icon: Package, href: "/inventory" },
 ];
 
 export function Sidebar() {
-  const [selectedItem, setSelectedItem] = useState<NavItem>("dashboard");
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Check for Cmd+N (Mac) or Alt+N (Windows/Linux)
-      if ((e.metaKey || e.altKey) && e.key.toLowerCase() === 'n') {
+      if ((e.metaKey || e.altKey) && e.key.toLowerCase() === "n") {
         e.preventDefault();
         toast.info("Quick actions is still in development", {
           description: "This feature will be available soon.",
@@ -44,8 +61,8 @@ export function Sidebar() {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
@@ -88,46 +105,153 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Navigation Section - 12px below Quick Actions */}
-      <nav className="flex-1 overflow-y-auto" style={{ marginTop: "12px", marginLeft: "9px" }}>
+      {/* Navigation Section */}
+      <nav
+        className="flex-1 overflow-y-auto"
+        style={{ marginTop: "12px", marginLeft: "9px" }}
+      >
         {NAV_ITEMS.map((item, index) => (
           <NavButton
             key={item.id}
             item={item}
-            isSelected={selectedItem === item.id}
+            isSelected={pathname === item.href}
             isFirst={index === 0}
-            onClick={() => setSelectedItem(item.id)}
           />
         ))}
       </nav>
-      {/* User Button at Bottom */}
-      <div style={{ marginTop: "auto", padding: "12px" }}>
-        <button
-          className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          style={{
-            border: "none",
-            backgroundColor: "transparent",
-            cursor: "pointer",
-          }}
-        >
-          <div
-            className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden"
-            style={{ flexShrink: 0 }}
+
+      {/* User Profile Section */}
+      <div style={{ padding: "8px" }}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100/80 transition-all duration-200"
+              style={{
+                border: "0.6px solid #E5E7EB",
+                backgroundColor: "#FFFFFF",
+                cursor: "pointer",
+              }}
+            >
+              <Avatar className="h-7 w-7">
+                <AvatarImage src="https://github.com/shadcn.png" alt="Daniel Parker" />
+                <AvatarFallback className="bg-gray-200 text-gray-700 text-xs font-medium">
+                  DP
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 text-left overflow-hidden">
+                <div
+                  className="font-medium truncate"
+                  style={{
+                    fontSize: "12px",
+                    color: "#111827",
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  Daniel Parker
+                </div>
+                <div
+                  className="truncate"
+                  style={{
+                    fontSize: "10px",
+                    color: "#6B7280",
+                  }}
+                >
+                  daniel.parker@gmail.com
+                </div>
+              </div>
+              <ChevronsUpDown
+                size={12}
+                strokeWidth={2}
+                className="text-gray-400 flex-shrink-0"
+              />
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent
+            align="end"
+            side="top"
+            className="w-40 mb-1.5"
+            sideOffset={4}
+            style={{
+              backgroundColor: "#FFFFFF",
+              border: "0.6px solid #E5E7EB",
+              boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.06)",
+            }}
           >
-            <span className="text-sm font-medium text-gray-700">DP</span>
-          </div>
-          <div className="flex-1 text-left overflow-hidden">
-            <div className="text-sm font-medium text-gray-900 truncate">
-              Daniel Parker
-            </div>
-            <div className="text-xs text-gray-500 truncate">
-              daniel.parker@gmail.com
-            </div>
-          </div>
-        </button>
+            {/* Upgrade Section */}
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="cursor-pointer gap-1.5"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 500,
+                  padding: "6px 8px",
+                }}
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Upgrade to Pro</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator style={{ backgroundColor: "#E5E7EB", height: "0.6px", margin: "2px 0" }} />
+
+            {/* Account Settings */}
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="cursor-pointer gap-1.5"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 500,
+                  padding: "6px 8px",
+                }}
+              >
+                <User className="h-3.5 w-3.5" />
+                <span>Account</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer gap-1.5"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 500,
+                  padding: "6px 8px",
+                }}
+              >
+                <CreditCard className="h-3.5 w-3.5" />
+                <span>Billing</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer gap-1.5"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 500,
+                  padding: "6px 8px",
+                }}
+              >
+                <Bell className="h-3.5 w-3.5" />
+                <span>Notifications</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator style={{ backgroundColor: "#E5E7EB", height: "0.6px", margin: "2px 0" }} />
+
+            {/* Log Out */}
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="cursor-pointer gap-1.5 text-red-600 focus:text-red-600 focus:bg-red-50"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 500,
+                  padding: "6px 8px",
+                }}
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </aside>
-    
   );
 }
 
@@ -198,7 +322,9 @@ function QuickActionsButton() {
         }}
       >
         <Command size={9} strokeWidth={2.5} />
-        <span style={{ fontSize: "10px", lineHeight: "1", fontWeight: "medium" }}>N</span>
+        <span style={{ fontSize: "10px", lineHeight: "1", fontWeight: "medium" }}>
+          N
+        </span>
       </div>
     </button>
   );
@@ -234,7 +360,9 @@ function SearchButton() {
           borderRadius: "5px",
         }}
       >
-        <span style={{ color: "#6B7280", fontSize: "12px", lineHeight: "1" }}>/</span>
+        <span style={{ color: "#6B7280", fontSize: "12px", lineHeight: "1" }}>
+          /
+        </span>
       </div>
     </button>
   );
@@ -244,39 +372,39 @@ interface NavButtonProps {
   item: NavItemConfig;
   isSelected: boolean;
   isFirst: boolean;
-  onClick: () => void;
 }
 
-function NavButton({ item, isSelected, isFirst, onClick }: NavButtonProps) {
+function NavButton({ item, isSelected, isFirst }: NavButtonProps) {
   const Icon = item.icon;
 
   return (
-    <button
-      onClick={onClick}
-      className="flex items-center font-medium"
-      style={{
-        width: "222px",
-        height: "29px",
-        backgroundColor: isSelected ? "#EDEEF1" : "transparent",
-        border: "none",
-        borderRadius: "6px",
-        paddingLeft: "9px",
-        marginTop: isFirst ? "0" : "3px",
-        cursor: "pointer",
-      }}
-    >
-      <Icon size={14} strokeWidth={2} style={{ color: "#111827" }} />
-      <span
+    <Link href={item.href}>
+      <button
+        className="flex items-center font-medium"
         style={{
-          marginLeft: "8px",
-          fontSize: "14px",
-          letterSpacing: "-0.03em",
-          color: "#111827",
-          lineHeight: "1",
+          width: "222px",
+          height: "29px",
+          backgroundColor: isSelected ? "#EDEEF1" : "transparent",
+          border: "none",
+          borderRadius: "6px",
+          paddingLeft: "9px",
+          marginTop: isFirst ? "0" : "3px",
+          cursor: "pointer",
         }}
       >
-        {item.label}
-      </span>
-    </button>
+        <Icon size={14} strokeWidth={2} style={{ color: "#111827" }} />
+        <span
+          style={{
+            marginLeft: "8px",
+            fontSize: "14px",
+            letterSpacing: "-0.03em",
+            color: "#111827",
+            lineHeight: "1",
+          }}
+        >
+          {item.label}
+        </span>
+      </button>
+    </Link>
   );
 }

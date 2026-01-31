@@ -1,16 +1,21 @@
-import { House, RotateCcw } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { usePathname } from "next/navigation";
+import { RotateCcw, House, RefreshCcw, File, UsersRound, Package } from "lucide-react";
+
+const PAGE_CONFIG: Record<string, { title: string; icon: typeof House }> = {
+  "/": { title: "Dashboard", icon: House },
+  "/transactions": { title: "Transactions", icon: RefreshCcw },
+  "/reports": { title: "Reports", icon: File },
+  "/customers": { title: "Customers", icon: UsersRound },
+  "/inventory": { title: "Inventory", icon: Package },
+};
 
 export function DashboardHeader() {
+  const pathname = usePathname();
+  const config = PAGE_CONFIG[pathname] || { title: "Dashboard", icon: House };
+  const Icon = config.icon;
+
   return (
     <div
       style={{
@@ -24,9 +29,9 @@ export function DashboardHeader() {
         height: "52px",
       }}
     >
-      {/* Left side - Logo and Dashboard text */}
+      {/* Left side - Icon and Page title */}
       <div style={{ display: "flex", alignItems: "center" }}>
-        <House size={14} strokeWidth={1.5} style={{ color: "#111827" }} />
+        <Icon size={14} strokeWidth={1.5} style={{ color: "#111827" }} />
         <span
           style={{
             marginLeft: "6px",
@@ -37,44 +42,16 @@ export function DashboardHeader() {
             lineHeight: "1",
           }}
         >
-          Dashboard
+          {config.title}
         </span>
       </div>
 
-      {/* Right side - Last Refresh and Avatar */}
-      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        {/* Last Refresh */}
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <RotateCcw size={13} strokeWidth={2} style={{ color: "#6B7280" }} />
-          <span style={{ fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
-            Last refresh: <span style={{ fontWeight: 500 }}>TODAY 09:41 AM</span>
-          </span>
-        </div>
-
-        {/* Avatar Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="rounded-full p-1">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="\my-notion-face-portrait.png" alt="User" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-32">
-            <DropdownMenuGroup>
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem className="text-destructive focus:text-destructive">
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      {/* Right side - Last Refresh */}
+      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+        <RotateCcw size={13} strokeWidth={2} style={{ color: "#6B7280" }} />
+        <span style={{ fontSize: "12px", color: "#6B7280", whiteSpace: "nowrap" }}>
+          Last refresh: <span style={{ fontWeight: 500 }}>TODAY 09:41 AM</span>
+        </span>
       </div>
     </div>
   );

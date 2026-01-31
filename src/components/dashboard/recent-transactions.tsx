@@ -21,7 +21,7 @@ import {
 interface Transaction {
   id: string;
   date: string;
-  type: "sale" | "expense";
+  type: "Revenue" | "expense";
   party: string;
   amount: number;
   description: string;
@@ -37,7 +37,7 @@ const transactions: Transaction[] = [
   {
     id: "1",
     date: "27 Jan 2026",
-    type: "sale",
+    type: "Revenue",
     party: "O. Damilola",
     amount: 45000,
     description: "Invoice paid for January supplies",
@@ -55,7 +55,7 @@ const transactions: Transaction[] = [
   {
     id: "3",
     date: "25 Jan 2026",
-    type: "sale",
+    type: "Revenue",
     party: "J. Aliyu",
     amount: 32500,
     description: "Product delivery - Order #1843",
@@ -73,7 +73,7 @@ const transactions: Transaction[] = [
   {
     id: "5",
     date: "23 Jan 2026",
-    type: "sale",
+    type: "Revenue",
     party: "O. Darasimi",
     amount: 28000,
     description: "Bulk order payment",
@@ -229,12 +229,12 @@ export function RecentTransactions() {
               <TableCell className="py-2.5">
                 <span
                   className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
-                    transaction.type === "sale"
+                    transaction.type === "Revenue"
                       ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                       : "bg-rose-50 text-rose-700 border border-rose-200"
                   }`}
                 >
-                  {transaction.type === "sale" ? "Sale" : "Expense"}
+                  {transaction.type === "Revenue" ? "Revenue" : "Expense"}
                 </span>
               </TableCell>
               <TableCell className="font-medium py-2.5">
