@@ -147,7 +147,7 @@ export function Sidebar() {
                     letterSpacing: "-0.01em",
                   }}
                 >
-                  Daniel Parker
+                  Ibukunoluwa Fodunrin
                 </div>
                 <div
                   className="truncate"
@@ -156,7 +156,7 @@ export function Sidebar() {
                     color: "#6B7280",
                   }}
                 >
-                  daniel.parker@gmail.com
+                  ibukunford@gmail.com
                 </div>
               </div>
               <ChevronsUpDown
