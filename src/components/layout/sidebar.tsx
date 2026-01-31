@@ -133,9 +133,9 @@ export function Sidebar() {
               }}
             >
               <Avatar className="h-7 w-7">
-                <AvatarImage src="https://github.com/shadcn.png" alt="Daniel Parker" />
+                <AvatarImage src="/user.png" alt="Daniel Parker" />
                 <AvatarFallback className="bg-gray-200 text-gray-700 text-xs font-medium">
-                  DP
+                  UP
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 text-left overflow-hidden">
